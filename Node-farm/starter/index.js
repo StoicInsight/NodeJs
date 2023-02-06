@@ -25,26 +25,34 @@ const url = require('url')
 // })
 
 // Server
+// Read API Data from file
+const tempOverview = fs.readFileSync(`${__dirname}/templates/overview.html`, 'utf-8')
+const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, 'utf-8')
+const tempProduct = fs.readFileSync(`${__dirname}/templates/product.html`, 'utf-8')
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8')
+// Transform data to json
+const dataObj = JSON.parse(data)
+
 // Create Server 
 const server = http.createServer((req, res) => {
   const pathName = req.url
 
+  // OVERVIEW PAGE
   if(pathName === "/" || pathName === '/overview') {
-    res.end('This is the overview') 
+    res.end(tempOverview)
+    
+    // PROCUCT PAGE
   } else if(pathName === '/product') {
-    res.end('This is the product')
+    res.end(tempProduct)
+
+    // API PAGE
   } else if(pathName === '/api'){
     
-    fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
-      const productData = JSON.parse(data)
-      // Let browser know youre sending back json data
-      res.writeHead(200, {
-       'Content-type': 'application/json' 
-      })
-      console.log(productData)
-      res.end(data)
-    })
+    // Let browser know youre sending back json data
+    res.writeHead(200, { 'Content-type': 'application/json' })
+    res.end(data)
 
+    // NOT FOUND
   } else {
     res.writeHead(404, {
       'Content-type': 'text-html'
