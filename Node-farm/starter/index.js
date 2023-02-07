@@ -36,7 +36,7 @@ const dataObj = JSON.parse(data)
 // Create Server 
 const server = http.createServer((req, res) => {
   const pathName = req.url
-
+  const request = req.method()
   // OVERVIEW PAGE
   if(pathName === "/" || pathName === '/overview') {
     res.end(tempOverview)
