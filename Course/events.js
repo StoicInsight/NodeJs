@@ -12,11 +12,10 @@ const customEmitter = new EventEmitter()
 // customEmitter.emit('response')
 
 // Create server with emitter
-const server = http.createServer((res, req) => {
-  console.log('server created')
-})
+const server = http.createServer()
 
 server.on('request', (req, res) => {
+  res.end('From emiter')
   console.log('Server is on')
 })
 
